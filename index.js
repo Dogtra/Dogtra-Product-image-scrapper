@@ -24,37 +24,29 @@ const getProducts = async () => {
     console.log("Fetching product list")
 
     document.querySelectorAll('a[id=desktop]').forEach(item => {
-        console.log(item['href'])
-    })
-    
-    // Array.from(document.getElementById('productImages').childNodes).filter(item => item.tagName=="IMG").forEach(item => console.log(item.currentSrc));
-    // 
+        getImages(item['href'])
 
+    })
 }
 
-const getImages = async () => {
-    const { data } = await axios.get("https://www.dogtra.com/products/e-collars/tom-davis-280c");
+const getImages = async (uri) => {
+
+    const { data } = await axios.get(uri);
     const dom = new JSDOM(data, {
       resources: "usable"
     });
     const { document } = dom.window;
-
-    const headerTitle = document.getElementsByClassName('pdp-header-title');
-
-    console.log(JSON.stringify(headerTitle, null, 4));
     
     const productName = document.getElementsByClassName('pdp-header-title')[0].innerHTML.replace(/ /g,"_");
-
 
     let count = 0;
 
     Array.from(document.getElementById('productImages').childNodes).filter(item => item.tagName=="IMG").forEach(item =>  {
-        console.log(item.src)
         count++ 
         download('https://dogtra.com' + item.src, productName + '_' + count + '.jpg', () => console.log('done'))
     });
 }
 
 
-// getProducts()
-getImages()
+getProducts()
+// getImages()
