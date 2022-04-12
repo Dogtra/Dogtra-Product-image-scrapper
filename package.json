@@ -1,0 +1,16 @@
+{
+  "name": "dogtra-scrapper",
+  "version": "1.0.0",
+  "description": "dogtra.com image and categories for product scrapper",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jeong-Heon YANG",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1",
+    "jsdom": "^19.0.0",
+    "request": "^2.88.2"
+  }
+}
