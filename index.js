@@ -75,5 +75,5 @@ const getImages = async (uri) => {
 }
 
 
-getProducts()
+// getProducts()
 // getImages('https://www.dogtra.com/products/e-collars/tom-davis-280c')
