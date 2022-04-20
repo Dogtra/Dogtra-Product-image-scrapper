@@ -1,7 +1,6 @@
-const axios = require('axios')
-const { JSDOM } = require("jsdom")
-var fs = require('fs');
-const downloadImage = require('./utils/download_image')
+import axios from "axios";
+import { JSDOM } from "jsdom";
+import { saveJson, downloadImage } from "../utils/tools";
 
 const fetchBlogInformation = async (uri, blogPost) => {
     console.log('Fetching images for : ' + uri)
@@ -36,10 +35,7 @@ const fetchBlogInformation = async (uri, blogPost) => {
 
     images.forEach(img => {
         downloadImage('https://www.dogtra.com' + img.src, blogPost.urlPath + '_' + imageCounter, 'images/blogs/')
-        blogPost.images.push({
-            fileName: blogPost.title.replace(' ', '_') + '_' + imageCounter,
-            src: img.src
-        })
+        blogPost.images.push(blogPost.title.replace(' ', '_') + '_' + imageCounter)
         imageCounter++
     })
 
@@ -68,7 +64,7 @@ const getAllBlogs = async () => {
         } else {
             let blog = {
                 'preview': pTags[0].innerHTML,
-                'date': pTags[0].innerHTML,
+                'date': pTags[1].innerHTML,
                 'type': 'blog',
                 'urlPath': blogThumb.getElementsByTagName("a")[0].href.replace('/blog-and-events/', ''),
                 'categories': [],
@@ -82,11 +78,7 @@ const getAllBlogs = async () => {
         }
     }
 
-    fs.writeFile("blogs.json", JSON.stringify(blogPosts), function(err) {
-        if (err) {
-            console.log(err);
-        }
-    });
+    saveJson(blogPosts, "blogs.json");
 }
 
 getAllBlogs()
